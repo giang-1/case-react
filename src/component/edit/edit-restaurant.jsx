@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { handleEditRestaurantList } from "../../slice/restaurant-slice"
 const schema = yup.object({
     name: yup.string().required(),
     image: yup.string().required(),
@@ -10,22 +11,13 @@ const schema = yup.object({
     hoursOfOperation: yup.string().required(),
     rating: yup.number().required(),
     price: yup.number().required(),
+    describe: yup.string().required()
 })
 
-export default function EditRestaurant({ data }) {
-    const dataForEdit = useSelector((state) => state.restaurantList.dataForEdit)
-    console.log(dataForEdit)
-    const [dataEdit, setDataEdit] = useState()
-    useEffect(() => {
-        async function fetchDataForEdit() {
-            let res = await fetch(`https://contact-api-orcin.vercel.app/restaurant/${dataForEdit.id}`)
-            let dataForEditRestaurant = await res.json()
-            setDataEdit(dataForEditRestaurant)
-            console.log(dataEdit)
-        }
-        fetchDataForEdit()
-    }, [])
+export default function EditRestaurant() {
+    const dispatch = useDispatch()
     const {
+        setValue,
         register,
         handleSubmit,
         reset,
@@ -33,8 +25,38 @@ export default function EditRestaurant({ data }) {
     } = useForm({
         resolver: yupResolver(schema)
     })
+    const dataForEdit = useSelector((state) => state.restaurantList?.dataForEdit)
+    // console.log(dataForEdit)
+    const [dataEdit, setDataEdit] = useState()
+    useEffect(() => {
+        if (dataForEdit.id) {
+            async function fetchDataForEdit() {
+                let res = await fetch(`https://contact-api-orcin.vercel.app/restaurant/${dataForEdit?.id}`)
+                let dataForEditRestaurant = await res.json()
+                setDataEdit(dataForEditRestaurant)
+                setValue("name", dataForEditRestaurant.name)
+                setValue("image", dataForEditRestaurant.image)
+                setValue("address", dataForEditRestaurant.address)
+                setValue("hoursOfOperation", dataForEditRestaurant.hoursOfOperation)
+                setValue("price", dataForEditRestaurant.price)
+                setValue("rating", dataForEditRestaurant.rating)
+                setValue("describe", dataForEditRestaurant.describe)
+
+            }
+            fetchDataForEdit()
+        }
+    }, [dataForEdit?.id])
+    // console.log(dataEdit)
+    // console.log(dataForEdit)
+
     const submitEditRestaurant = (values) => {
-        console.log(values)
+        let newRestaurant = {
+            ...dataForEdit,
+            ...values,
+        }
+        console.log(newRestaurant)
+        dispatch(handleEditRestaurantList(newRestaurant))
+        // reset()
     }
     return (
         <div className="modal" tabindex="-1" id="editRestaurant">
@@ -50,21 +72,21 @@ export default function EditRestaurant({ data }) {
                                 <label className="form-label">tên</label>
                                 <input type="text"
                                     className="form-control "
-                                    defaultValue={dataForEdit.name}
+                                    // defaultValue={dataEdit.name}
                                     {...register('name')} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">ảnh</label>
                                 <input type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.image}
+                                    // defaultValue={dataEdit.image}
                                     {...register('image')} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">địa chỉ</label>
                                 <input type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.address}
+                                    // defaultValue={dataEdit.address}
                                     {...register('address')}
                                 />
                             </div>
@@ -72,14 +94,14 @@ export default function EditRestaurant({ data }) {
                                 <label className="form-label">giờ mở cửa</label>
                                 <input type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.hoursOfOperation}
+                                    // defaultValue={dataEdit.hoursOfOperation}
                                     {...register('hoursOfOperation')} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giá</label>
                                 <input type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.price}
+                                    // defaultValue={dataEdit.price}
                                     {...register('price')}
                                 />
                             </div>
@@ -87,14 +109,14 @@ export default function EditRestaurant({ data }) {
                                 <label className="form-label">rating</label>
                                 <input type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.rating}
+                                    // defaultValue={dataEdit.rating}
                                     {...register('rating')} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">describe</label>
                                 <textarea type="text"
                                     className="form-control"
-                                    defaultValue={dataForEdit.describe}
+                                    // defaultValue={dataEdit.describe}
                                     {...register('describe')} />
                             </div>
                             <div className="modal-footer">

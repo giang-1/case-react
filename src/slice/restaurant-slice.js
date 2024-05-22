@@ -44,10 +44,22 @@ const restaurantSlice = createSlice({
         })
 
         builder.addCase(editRestaurantList.pending, (state, action) => {
-
+            state.isLoading = 'loading'
         })
         builder.addCase(editRestaurantList.fulfilled, (state, action) => {
+            state.isLoading = 'idle'
             state.dataForEdit = action.payload
+        })
+        builder.addCase(handleEditRestaurantList.pending, (state, action) => {
+            state.isLoading = 'loading'
+        })
+        builder.addCase(handleEditRestaurantList.fulfilled, (state, action) => {
+            state.restaurant = state.restaurant.map((item) => {
+                if (item.id == action.payload.id) {
+                    return action.payload
+                }
+                return item
+            })
         })
     }
 })
@@ -87,8 +99,21 @@ export const createRestaurantList = createAsyncThunk('retaurantList/createRestau
 )
 export const editRestaurantList = createAsyncThunk('restaurant/editRestaurantList',
     async (item) => {
-        let res = await fetch(`https://contact-api-orcin.vercel.app/restaurant${item.id}`)
-        const data = res.json()
+        let res = await fetch(`https://contact-api-orcin.vercel.app/restaurant/${item.id}`)
+        const data = await res.json()
+        return data
+    }
+)
+export const handleEditRestaurantList = createAsyncThunk('restaurant/handleEditRestaurantList',
+    async (item) => {
+        let res = await fetch(`https://contact-api-orcin.vercel.app/restaurant/${item.id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item)
+        })
+        let data = await res.json()
         return data
     }
 )

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import restaurantSlice, { fetchRestaurantList, removeRestaurantList } from "../slice/restaurant-slice"
+import restaurantSlice, { editRestaurantList, fetchRestaurantList, removeRestaurantList } from "../slice/restaurant-slice"
 import { useDispatch, useSelector } from "react-redux"
 import { MdDone } from "react-icons/md";
 import cartSlice from "../slice/cart-slice";
@@ -12,14 +12,14 @@ import CreateRestaurant from "../component/create/create-restaurant";
 
 export default function Restaurant() {
     // const [restaurantList, setRestaurantList] = useState()
-    const [number, setNumber] = useState(1)
+    // const [number, setNumber] = useState(1)
     const [dataForEdit, setDataForEdit] = useState()
     const dispatch = useDispatch()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
     useEffect(() => {
         dispatch(fetchRestaurantList())
-    }, [number])
-    console.log(number)
+    }, [])
+    // console.log(number)
     const handleAddToCart = (item) => {
         dispatch(cartSlice.actions.addToCart(item))
         // console.log(item)
@@ -27,9 +27,8 @@ export default function Restaurant() {
     const openEditRestaurant = (item) => {
         const modalElement = new Modal(document.getElementById('editRestaurant'))
         modalElement.show()
-        dispatch(restaurantSlice.actions.takeDataForEdit(item))
-        // setDataForEdit(item)
-        // console.log(item)
+        dispatch(editRestaurantList(item))
+        console.log(item)
     }
     const openCreateRestaurant = () => {
         const modalElement = new Modal(document.getElementById('createRestaurant'))
@@ -65,7 +64,7 @@ export default function Restaurant() {
                                         <button
                                             onClick={() => {
                                                 dispatch(removeRestaurantList(item))
-                                                setNumber(number + 1)
+                                                // setNumber(number + 1)
                                             }}
                                         >xóa</button>
                                     </li>
@@ -80,7 +79,7 @@ export default function Restaurant() {
                 </div>
                 <div className="col-md-3"><FillBar /></div>
             </div>
-            <EditRestaurant data={dataForEdit} />
+            <EditRestaurant />
             <CreateRestaurant />
 
 
