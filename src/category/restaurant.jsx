@@ -7,6 +7,7 @@ import MainLayout from "../component/main-layout";
 import FillBar from "../navbar/fillbar";
 import EditRestaurant from "../component/edit/edit-restaurant";
 import { Modal } from "bootstrap";
+import CreateRestaurant from "../component/create/create-restaurant";
 
 
 export default function Restaurant() {
@@ -29,6 +30,10 @@ export default function Restaurant() {
         dispatch(restaurantSlice.actions.takeDataForEdit(item))
         // setDataForEdit(item)
         // console.log(item)
+    }
+    const openCreateRestaurant = () => {
+        const modalElement = new Modal(document.getElementById('createRestaurant'))
+        modalElement.show()
     }
 
     return (
@@ -68,11 +73,15 @@ export default function Restaurant() {
                             </div>
                         ))
                     }
-                    <h2>thêm</h2>
+                    <button
+                        className="btn btn-sm bg-success"
+                        onClick={openCreateRestaurant}
+                    >thêm </button>
                 </div>
                 <div className="col-md-3"><FillBar /></div>
             </div>
             <EditRestaurant data={dataForEdit} />
+            <CreateRestaurant />
 
 
         </MainLayout>
