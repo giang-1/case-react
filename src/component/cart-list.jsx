@@ -8,7 +8,7 @@ export default function CartList() {
     return (
         <>
             <MainLayout>
-                <button>lên lịch trình</button>
+                <h3>những nhà hàng bạn đã quan tâm</h3>
 
                 <div className="container row">
                     {

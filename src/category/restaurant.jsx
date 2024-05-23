@@ -2,20 +2,42 @@ import { useEffect, useState } from "react"
 import restaurantSlice, { editRestaurantList, fetchRestaurantList, removeRestaurantList } from "../slice/restaurant-slice"
 import { useDispatch, useSelector } from "react-redux"
 import { MdDone } from "react-icons/md";
+import { FaStar } from "react-icons/fa";
 import cartSlice from "../slice/cart-slice";
 import MainLayout from "../component/main-layout";
 import FillBar from "../navbar/fillbar";
 import EditRestaurant from "../component/edit/edit-restaurant";
 import { Modal } from "bootstrap";
 import CreateRestaurant from "../component/create/create-restaurant";
+import DetailRestaurant from "../component/detail/detailRestaurant";
+import { number } from "yup";
 
 
 export default function Restaurant() {
-    // const [restaurantList, setRestaurantList] = useState()
-    // const [number, setNumber] = useState(1)
-    const [dataForEdit, setDataForEdit] = useState()
     const dispatch = useDispatch()
+    const { searchText, maxPrice, rating } = useSelector((state) => state.filterList)
+    const [detailRestaurant, setDetailRestaurant] = useState({})
+    const [dataForEdit, setDataForEdit] = useState()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
+    const queryRestaurant = () => {
+        let filterRestaurant = [...restaurantList]
+        if (searchText) {
+            filterRestaurant = filterRestaurant.filter((p) => p.name.toLowerCase().includes(searchText.toLowerCase()))
+        }
+        if (maxPrice != 'tất cả') {
+            if (maxPrice == 'tăng dần') {
+                filterRestaurant = filterRestaurant.sort((a, b) => a.maxPrice - b.maxPrice)
+            }
+            if (maxPrice == 'giảm dần') {
+                filterRestaurant = filterRestaurant.sort((a, b) => b.maxPrice - a.maxPrice)
+            }
+        }
+        if (rating != 'tất cả') {
+            filterRestaurant = filterRestaurant.filter((p) => Number(p.rating) === Number(rating))
+        }
+        return filterRestaurant
+    }
+    const remainRestaurantList = queryRestaurant()
     useEffect(() => {
         dispatch(fetchRestaurantList())
     }, [])
@@ -34,14 +56,20 @@ export default function Restaurant() {
         const modalElement = new Modal(document.getElementById('createRestaurant'))
         modalElement.show()
     }
+    const openDetailRestaurant = (item) => {
+        const modalElement = new Modal(document.getElementById('openDetailModal'))
+        modalElement.show()
+        setDetailRestaurant(item)
+    }
 
     return (
         <MainLayout>
 
             <div className="container row">
+                <div className="col-md-3"><FillBar /></div>
                 <div className="col-md-9 row">
                     {
-                        restaurantList?.map((item) => (
+                        remainRestaurantList?.map((item) => (
                             <div className="card col-md-3 mb-4 me-4 mt-4" style={{ width: '15rem' }} key={item.id}
 
                             >
@@ -51,13 +79,22 @@ export default function Restaurant() {
                                     {/* <p className="card-text">{item.describe}</p> */}
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">{item.price}</li>
-                                    <li className="list-group-item">{item.rating}</li>
-                                    <li className="list-group-item">{item.hoursOfOperation}</li>
+                                    <li className="list-group-item">{`${item.minPrice} - ${item.maxPrice}`}</li>
+                                    <li className="list-group-item">{
+                                        new Array(item.rating).fill(1).map((i, index) => (
+                                            <FaStar key={index} />
+                                        ))
+                                    }</li>
                                     <li className="list-group-item">{item.address}</li>
-                                    <li><button
+                                    <li className="list-group-item"><button
+                                        className="btn btn-outline-primary me-1"
                                         onClick={() => handleAddToCart(item)}
-                                    > <MdDone />quan tâm</button>
+                                    > <MdDone />quan t</button>
+                                        <button
+                                            className="btn btn-outline-primary"
+                                            onClick={() => openDetailRestaurant(item)}
+
+                                        > <MdDone />chi tiết</button>
                                         <button
                                             onClick={() => openEditRestaurant(item)}
                                         >sửa</button>
@@ -77,10 +114,11 @@ export default function Restaurant() {
                         onClick={openCreateRestaurant}
                     >thêm </button>
                 </div>
-                <div className="col-md-3"><FillBar /></div>
+                <EditRestaurant />
+                <CreateRestaurant />
+                <DetailRestaurant item={detailRestaurant} />
             </div>
-            <EditRestaurant />
-            <CreateRestaurant />
+
 
 
         </MainLayout>

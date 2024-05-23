@@ -7,15 +7,15 @@ export default function NavBar() {
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink className="nav-link" to="/home">home</NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/restaurant">restaurant</NavLink>
+                                <NavLink className="nav-link" to="/restaurant">restaurant list</NavLink>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink className="nav-link" to='/visitLocation'>visitLocation</NavLink>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
 

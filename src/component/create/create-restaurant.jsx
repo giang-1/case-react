@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createRestaurantList } from "../../slice/restaurant-slice"
+import { useState } from "react"
 const schema = yup.object({
     name: yup.string().required(),
     image: yup.string().required(),
     address: yup.string().required(),
     hoursOfOperation: yup.string().required(),
     rating: yup.number().required(),
-    price: yup.number().required(),
+    minPrice: yup.number().required(),
+    maxPrice: yup.number().required()
 })
 
 export default function CreateRestaurant() {
+
     const dispatch = useDispatch()
     const {
         register,
@@ -25,9 +27,10 @@ export default function CreateRestaurant() {
     })
     const submitCreateRestaurant = (values) => {
         dispatch(createRestaurantList(values))
+        reset()
     }
     return (
-        <div className="modal" tabindex="-1" id="createRestaurant">
+        <div className="modal fade show" tabindex="-1" id="createRestaurant">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -39,50 +42,70 @@ export default function CreateRestaurant() {
                             <div className="form-group mb-2">
                                 <label className="form-label">tên</label>
                                 <input type="text"
-                                    className="form-control "
+                                    className={`form-control ${errors.name?.message ? 'is-invalid' : ''}`}
                                     {...register('name')} />
+                                <span className="invalid-feedback">{errors.name?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">ảnh</label>
-                                <input type="text"
-                                    className="form-control"
+                                <input type="url"
+                                    className={`form-control ${errors.image?.message ? 'is-invalid' : ''}`}
                                     {...register('image')} />
+                                <span className="invalid-feedback">{errors.image?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">địa chỉ</label>
                                 <input type="text"
-                                    className="form-control"
+                                    className={`form-control ${errors.address?.message ? 'is-invalid' : ''}`}
                                     {...register('address')}
+
                                 />
+                                <span className="invalid-feedback">{errors.address?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giờ mở cửa</label>
                                 <input type="text"
-                                    className="form-control"
+                                    className={`form-control ${errors.hoursOfOperation?.message ? 'is-invalid' : ''}`}
                                     {...register('hoursOfOperation')} />
+                                <span className="invalid-feedback">{errors.hoursOfOperation?.message}</span>
                             </div>
                             <div className="form-group mb-2">
-                                <label className="form-label">giá</label>
-                                <input type="text"
-                                    className="form-control"
-                                    {...register('price')}
+                                <label className="form-label">giá thấp nhất</label>
+                                <input type="number"
+                                    className={`form-control ${errors.price?.message ? 'is-invalid' : ''}`}
+                                    {...register('minPrice')}
                                 />
+                                <span className="invalid-feedback">{errors.price?.message}</span>
+                            </div>
+                            <div className="form-group mb-2">
+                                <label className="form-label">giá cao nhất</label>
+                                <input type="number"
+                                    className={`form-control ${errors.price?.message ? 'is-invalid' : ''}`}
+                                    {...register('maxPrice')}
+                                />
+                                <span className="invalid-feedback">{errors.price?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">rating</label>
-                                <input type="text"
-                                    className="form-control"
+                                <input type="number"
+                                    className={`form-control ${errors.rating?.message ? 'is-invalid' : ''}`}
                                     {...register('rating')} />
+                                <span className="invalid-feedback">{errors.rating?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">describe</label>
                                 <textarea type="text"
-                                    className="form-control"
+                                    className={`form-control ${errors.describe?.message ? 'is-invalid' : ''}`}
                                     {...register('describe')} />
+                                <span className="invalid-feedback">{errors.describe?.message}</span>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary">Save changes</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                                    onClick={() => reset()}
+                                >Close</button>
+                                <button type="submit" className="btn btn-primary"
+
+                                >Save changes</button>
                             </div>
                         </form>
                     </div>

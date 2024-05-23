@@ -8,7 +8,14 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             let newItem = action.payload
-            state.cartList.push(newItem)
+            let checkCartItem = state.cartList.find((item) => item?.id === action.payload.id)
+            if (checkCartItem) {
+                alert('đã thêm vào cart')
+            } else {
+                state.cartList.push(newItem)
+                alert('thêm vào cart thành công')
+            }
+
         }
     }
 })

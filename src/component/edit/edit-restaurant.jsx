@@ -10,7 +10,8 @@ const schema = yup.object({
     address: yup.string().required(),
     hoursOfOperation: yup.string().required(),
     rating: yup.number().required(),
-    price: yup.number().required(),
+    minPrice: yup.number().required(),
+    maxPrice: yup.number().required(),
     describe: yup.string().required()
 })
 
@@ -38,7 +39,8 @@ export default function EditRestaurant() {
                 setValue("image", dataForEditRestaurant.image)
                 setValue("address", dataForEditRestaurant.address)
                 setValue("hoursOfOperation", dataForEditRestaurant.hoursOfOperation)
-                setValue("price", dataForEditRestaurant.price)
+                setValue("minPrice", dataForEditRestaurant.minPrice)
+                setValue("maxPrice", dataForEditRestaurant.maxPrice)
                 setValue("rating", dataForEditRestaurant.rating)
                 setValue("describe", dataForEditRestaurant.describe)
 
@@ -98,11 +100,19 @@ export default function EditRestaurant() {
                                     {...register('hoursOfOperation')} />
                             </div>
                             <div className="form-group mb-2">
-                                <label className="form-label">giá</label>
+                                <label className="form-label">giá thấp nhất</label>
                                 <input type="text"
                                     className="form-control"
                                     // defaultValue={dataEdit.price}
-                                    {...register('price')}
+                                    {...register('minPrice')}
+                                />
+                            </div>
+                            <div className="form-group mb-2">
+                                <label className="form-label">giá cao nhất</label>
+                                <input type="text"
+                                    className="form-control"
+                                    // defaultValue={dataEdit.price}
+                                    {...register('maxPrice')}
                                 />
                             </div>
                             <div className="form-group mb-2">
@@ -120,8 +130,11 @@ export default function EditRestaurant() {
                                     {...register('describe')} />
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary">Save changes</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+
+                                >Close</button>
+                                <button type="submit" className="btn btn-primary"
+                                >Save changes</button>
                             </div>
                         </form>
                     </div>
