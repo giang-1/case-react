@@ -38,7 +38,8 @@ export default function EditRestaurant() {
                 setValue("name", dataForEditRestaurant.name)
                 setValue("image", dataForEditRestaurant.image)
                 setValue("address", dataForEditRestaurant.address)
-                setValue("hoursOfOperation", dataForEditRestaurant.hoursOfOperation)
+                setValue("timeOpen", dataForEditRestaurant.timeOpen)
+                setValue("timeClose", dataForEditRestaurant.timeClose)
                 setValue("minPrice", dataForEditRestaurant.minPrice)
                 setValue("maxPrice", dataForEditRestaurant.maxPrice)
                 setValue("rating", dataForEditRestaurant.rating)
@@ -97,7 +98,14 @@ export default function EditRestaurant() {
                                 <input type="text"
                                     className="form-control"
                                     // defaultValue={dataEdit.hoursOfOperation}
-                                    {...register('hoursOfOperation')} />
+                                    {...register('timeOpen')} />
+                            </div>
+                            <div className="form-group mb-2">
+                                <label className="form-label">giờ mở cửa</label>
+                                <input type="text"
+                                    className="form-control"
+                                    // defaultValue={dataEdit.hoursOfOperation}
+                                    {...register('timeClose')} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giá thấp nhất</label>

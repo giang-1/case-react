@@ -13,10 +13,10 @@ export default function PriceFill() {
                     {
                         priceArray.map((cat, index) => (
                             <div key={cat} className="form-check py-1">
-                                <input className="form-check-input" type="radio" name="category"
+                                <input className="form-check-input" type="radio" name="categor"
                                     id={`cat_${index}`}
                                     value={cat}
-                                    defaultChecked={cat === 'tất cả'}
+                                    defaultChecked={cat == 'tất cả'}
                                     onClick={() => dispatch(filterSlice.actions.setMaxPrice(cat))}
                                 />
                                 <label

@@ -32,7 +32,8 @@ export default function DetailRestaurant({ item }) {
                                     <p>{item.address}</p>
                                     <p>{item.minPrice - item.maxPrice}</p>
                                     <p>{item.describe}</p>
-                                    <p>{item.hoursOfOperation}</p>
+                                    <p>{item.timeOpen}</p>
+                                    <p>{item.timeClose}</p>
                                 </div>
                             </div>
                         </div>

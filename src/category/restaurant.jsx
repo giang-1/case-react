@@ -10,7 +10,7 @@ import EditRestaurant from "../component/edit/edit-restaurant";
 import { Modal } from "bootstrap";
 import CreateRestaurant from "../component/create/create-restaurant";
 import DetailRestaurant from "../component/detail/detailRestaurant";
-import { number } from "yup";
+
 
 
 export default function Restaurant() {
@@ -21,19 +21,20 @@ export default function Restaurant() {
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
     const queryRestaurant = () => {
         let filterRestaurant = [...restaurantList]
+        // console.log(filterRestaurant)
         if (searchText) {
             filterRestaurant = filterRestaurant.filter((p) => p.name.toLowerCase().includes(searchText.toLowerCase()))
         }
-        if (maxPrice != 'tất cả') {
-            if (maxPrice == 'tăng dần') {
+        if (maxPrice !== 'tất cả') {
+            if (maxPrice === 'tăng dần') {
                 filterRestaurant = filterRestaurant.sort((a, b) => a.maxPrice - b.maxPrice)
             }
-            if (maxPrice == 'giảm dần') {
+            if (maxPrice === 'giảm dần') {
                 filterRestaurant = filterRestaurant.sort((a, b) => b.maxPrice - a.maxPrice)
             }
         }
-        if (rating != 'tất cả') {
-            filterRestaurant = filterRestaurant.filter((p) => Number(p.rating) === Number(rating))
+        if (rating !== 'tất cả') {
+            filterRestaurant = filterRestaurant.filter((p) => p.rating === rating)
         }
         return filterRestaurant
     }

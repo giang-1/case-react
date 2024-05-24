@@ -1,10 +1,25 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "./main-layout";
 import Header from "./header";
+import { Modal } from "bootstrap";
+import BookingModal from "./bookingModal";
+import { useState } from "react";
+import filterSlice from "../slice/fillter-slice";
 
 export default function CartList() {
+    const dispatch = useDispatch()
+    const [bookingData, setBookingData] = useState({})
+    const [a, setA] = useState(false)
     const cartList = useSelector((state) => state.cartListRestaurant.cartList)
     // console.log(cartList)
+    const openBookingModal = (item) => {
+        const modalElement = new Modal(document.getElementById('bookingModal'))
+        modalElement.show()
+        dispatch(filterSlice.actions.setDataForBooking(item))
+        setBookingData(item)
+        setA(true)
+
+    }
     return (
         <>
             <MainLayout>
@@ -19,12 +34,15 @@ export default function CartList() {
                                     <h5 className="card-title">{item.name}</h5>
                                     <p className="card-text">{item.price}</p>
                                 </div>
+                                <button onClick={() => openBookingModal(item)}>đặt lịch</button>
                             </div>
                         ))
                     }
+                    <BookingModal data={bookingData} />
                 </div>
             </MainLayout>
 
+            {/* <BookingModal /> */}
         </>
     )
 }

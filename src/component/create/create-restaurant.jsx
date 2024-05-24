@@ -8,7 +8,8 @@ const schema = yup.object({
     name: yup.string().required(),
     image: yup.string().required(),
     address: yup.string().required(),
-    hoursOfOperation: yup.string().required(),
+    timeOpen: yup.number().required(),
+    timeClose: yup.number().required(),
     rating: yup.number().required(),
     minPrice: yup.number().required(),
     maxPrice: yup.number().required()
@@ -65,9 +66,16 @@ export default function CreateRestaurant() {
                             <div className="form-group mb-2">
                                 <label className="form-label">giờ mở cửa</label>
                                 <input type="text"
-                                    className={`form-control ${errors.hoursOfOperation?.message ? 'is-invalid' : ''}`}
-                                    {...register('hoursOfOperation')} />
-                                <span className="invalid-feedback">{errors.hoursOfOperation?.message}</span>
+                                    className={`form-control ${errors.timeOpen?.message ? 'is-invalid' : ''}`}
+                                    {...register('timeOpen')} />
+                                <span className="invalid-feedback">{errors.timeOpen?.message}</span>
+                            </div>
+                            <div className="form-group mb-2">
+                                <label className="form-label">giờ mở cửa</label>
+                                <input type="text"
+                                    className={`form-control ${errors.timeClose?.message ? 'is-invalid' : ''}`}
+                                    {...register('timeClose')} />
+                                <span className="invalid-feedback">{errors.timeClose?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giá thấp nhất</label>

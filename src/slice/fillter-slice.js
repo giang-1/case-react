@@ -5,8 +5,9 @@ const filterSlice = createSlice({
     name: 'filter',
     initialState: {
         searchText: '',
-        maxPrice: '',
-        rating: ''
+        maxPrice: 'tất cả',
+        rating: 'tất cả',
+        dataForBooking: {}
     },
     reducers: {
         setSearchText: (state, action) => {
@@ -17,6 +18,9 @@ const filterSlice = createSlice({
         },
         setRating: (state, action) => {
             state.rating = action.payload
+        },
+        setDataForBooking: (state, action) => {
+            state.dataForBooking = action.payload
         }
 
     }
