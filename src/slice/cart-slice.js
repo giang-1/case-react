@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -17,6 +17,21 @@ const cartSlice = createSlice({
             }
 
         }
-    }
+    },
+
 })
+export const handleSubmitCustomerInfo = createAsyncThunk('cart/handleSubmitCustomerInfo',
+    async (item) => {
+        let res = await fetch('https://contact-api-orcin.vercel.app/customerInfor', {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item)
+        })
+        let data = await res.json()
+        return data
+    }
+)
 export default cartSlice

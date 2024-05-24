@@ -65,14 +65,14 @@ export default function CreateRestaurant() {
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giờ mở cửa</label>
-                                <input type="text"
+                                <input type="number"
                                     className={`form-control ${errors.timeOpen?.message ? 'is-invalid' : ''}`}
                                     {...register('timeOpen')} />
                                 <span className="invalid-feedback">{errors.timeOpen?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giờ mở cửa</label>
-                                <input type="text"
+                                <input type="number"
                                     className={`form-control ${errors.timeClose?.message ? 'is-invalid' : ''}`}
                                     {...register('timeClose')} />
                                 <span className="invalid-feedback">{errors.timeClose?.message}</span>

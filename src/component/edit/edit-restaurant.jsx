@@ -8,7 +8,8 @@ const schema = yup.object({
     name: yup.string().required(),
     image: yup.string().required(),
     address: yup.string().required(),
-    hoursOfOperation: yup.string().required(),
+    timeOpen: yup.number().required(),
+    timeClose: yup.number().required(),
     rating: yup.number().required(),
     minPrice: yup.number().required(),
     maxPrice: yup.number().required(),
@@ -101,7 +102,7 @@ export default function EditRestaurant() {
                                     {...register('timeOpen')} />
                             </div>
                             <div className="form-group mb-2">
-                                <label className="form-label">giờ mở cửa</label>
+                                <label className="form-label">giờ đóng cửa</label>
                                 <input type="text"
                                     className="form-control"
                                     // defaultValue={dataEdit.hoursOfOperation}
