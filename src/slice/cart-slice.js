@@ -3,7 +3,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        cartList: []
+        cartList: [],
+        loginRoll: false,
+        cartOderList: []
     },
     reducers: {
         addToCart: (state, action) => {
@@ -16,8 +18,19 @@ const cartSlice = createSlice({
                 alert('thêm vào cart thành công')
             }
 
+        },
+        handleLoginRoll: (state, action) => {
+            state.loginRoll = action.payload
         }
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchOderList.pending, (state, action) => {
+            return state
+        })
+        builder.addCase(fetchOderList.fulfilled, (state, action) => {
+            state.cartOderList = action.payload
+        })
+    }
 
 })
 export const handleSubmitCustomerInfo = createAsyncThunk('cart/handleSubmitCustomerInfo',
@@ -30,6 +43,13 @@ export const handleSubmitCustomerInfo = createAsyncThunk('cart/handleSubmitCusto
             },
             body: JSON.stringify(item)
         })
+        let data = await res.json()
+        return data
+    }
+)
+export const fetchOderList = createAsyncThunk('cart/fetchOderList',
+    async () => {
+        let res = await fetch('https://contact-api-orcin.vercel.app/customerInfor')
         let data = await res.json()
         return data
     }

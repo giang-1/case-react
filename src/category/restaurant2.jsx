@@ -13,7 +13,7 @@ import DetailRestaurant from "../component/detail/detailRestaurant";
 
 
 
-export default function Restaurant() {
+export default function Restaurant2() {
     const dispatch = useDispatch()
     const { searchText, maxPrice, rating } = useSelector((state) => state.filterList)
     const [detailRestaurant, setDetailRestaurant] = useState({})
@@ -87,36 +87,33 @@ export default function Restaurant() {
                                         ))
                                     }</li>
                                     <li className="list-group-item">{item.address}</li>
-                                    <li className="list-group-item">
-                                        {/* <button
+                                    <li className="list-group-item"><button
                                         className="btn btn-outline-primary me-1"
                                         onClick={() => handleAddToCart(item)}
-                                    > <MdDone />quan t</button> */}
+                                    > <MdDone />quan t</button>
                                         <button
-                                            className="btn btn-outline-primary me-2"
+                                            className="btn btn-outline-primary"
                                             onClick={() => openDetailRestaurant(item)}
 
                                         > <MdDone />chi tiết</button>
-                                        <button
-                                            className="btn btn-outline-warning me-2"
+                                        {/* <button
                                             onClick={() => openEditRestaurant(item)}
                                         >sửa</button>
                                         <button
-                                            className="btn btn-outline-danger mt-2"
                                             onClick={() => {
                                                 dispatch(removeRestaurantList(item))
                                                 // setNumber(number + 1)
                                             }}
-                                        >xóa</button>
+                                        >xóa</button> */}
                                     </li>
                                 </ul>
                             </div>
                         ))
                     }
-                    <button
+                    {/* <button
                         className="btn btn-sm bg-success"
                         onClick={openCreateRestaurant}
-                    >thêm </button>
+                    >thêm </button> */}
                 </div>
                 <EditRestaurant />
                 <CreateRestaurant />

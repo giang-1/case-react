@@ -1,6 +1,11 @@
-import { NavLink } from "react-router-dom";
 
-export default function NavBar() {
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import OderList from "../component/oderList";
+
+export default function NavBar({ login }) {
+    // console.log(login)
+    const loginRoll = useSelector((state) => state.cartListRestaurant.loginRoll)
     return (
         <>
             <nav className="navbar navbar-expand-lg ">
@@ -11,7 +16,8 @@ export default function NavBar() {
                                 <NavLink className="nav-link" to="/home">home</NavLink>
                             </li> */}
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/restaurant">restaurant list</NavLink>
+                                {loginRoll ? <NavLink className="nav-link" to="/restaurantAdmin">restaurant list</NavLink> :
+                                    <NavLink className="nav-link" to="/restaurant">restaurant list</NavLink>}
                             </li>
                             {/* <li className="nav-item">
                                 <NavLink className="nav-link" to='/visitLocation'>visitLocation</NavLink>
@@ -19,7 +25,8 @@ export default function NavBar() {
                         </ul>
                     </div>
 
-                    <NavLink className="nav-link" aria-current="page" to="/cartSlice">cart</NavLink>
+                    {login ? <NavLink className="nav-link" aria-current="page" to="/cartSlice">cart</NavLink> :
+                        <NavLink to={'/oderList'}>oder list </NavLink>}
 
                 </div>
             </nav>

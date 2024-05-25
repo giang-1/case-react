@@ -7,7 +7,11 @@ const filterSlice = createSlice({
         searchText: '',
         maxPrice: 'tất cả',
         rating: 'tất cả',
-        dataForBooking: {}
+        oderListSearch: '',
+        oderListSort: '',
+        dataForBooking: {},
+
+
     },
     reducers: {
         setSearchText: (state, action) => {
@@ -21,6 +25,13 @@ const filterSlice = createSlice({
         },
         setDataForBooking: (state, action) => {
             state.dataForBooking = action.payload
+        },
+        setOderListSearch: (state, action) => {
+            state.oderListSearch = action.payload
+            console.log(action.payload)
+        },
+        setOderListFill: (state, action) => {
+            state.oderListSort = action.payload
         }
 
     }

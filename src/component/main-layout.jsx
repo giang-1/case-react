@@ -6,9 +6,9 @@ export default function MainLayout({ children }) {
     return (
         <>
             <Header />
-            <NavBar />
+            {/* <NavBar /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

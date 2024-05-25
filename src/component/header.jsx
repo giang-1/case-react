@@ -3,15 +3,17 @@ import { Modal } from "bootstrap";
 import Register from "../login/register";
 import Login from "../login/login";
 import { IoEarthSharp } from "react-icons/io5";
+import { useState } from "react";
+import NavBar from "../navbar/navbar";
+import { useDispatch, useSelector } from "react-redux";
+import cartSlice from "../slice/cart-slice";
 
 export default function Header() {
-    const openModalRegister = () => {
-        const modalElement = new Modal(document.getElementById('exampleModal'))
-        modalElement.show()
-    }
-    const openModalLogin = () => {
-        const modalElement = new Modal(document.getElementById('loginModal'))
-        modalElement.show()
+    const dispatch = useDispatch()
+    const loginRoll = useSelector((state) => state.cartListRestaurant.loginRoll)
+    const [propsLogin, setPropsLogin] = useState(!loginRoll)
+    const handleLoginRoll = () => {
+        dispatch(cartSlice.actions.handleLoginRoll(!loginRoll))
     }
     return (
         <>
@@ -21,22 +23,18 @@ export default function Header() {
                 <h4 className="flex-grow-1 text-center">du lịch huế</h4>
                 <div className="d-flex align-items-center">
 
-                    {/* <Link to={'/register'} className="bg-dark text-white me-3">đăng ký</Link> */}
-                    <button
-                        style={{ fontSize: '20px' }}
-                        className="me-2 btn btn-sm"
-                        onClick={openModalRegister}
-                    >đăng ký</button>
-                    {/* <Link to={'/login'} className="bg-dark text-white">đăng nhập</Link> */}
-                    <button
-                        style={{ fontSize: '20px' }}
-                        className="btn btn-sm"
-                        onClick={openModalLogin}
-                    >đăng nhập</button>
+                    <Link to={loginRoll ? '/restaurant' : '/restaurantAdmin'} className="btn btn-light text-dark me-3" role="button"
+                        onClick={handleLoginRoll}
+                    >{loginRoll ? 'đăng xuất' : 'đăng nhập'}</Link>
+
                 </div>
             </div>
-            <Register />
-            <Login />
+            <div>
+                <NavBar login={propsLogin} />
+
+            </div>
+            {/* <Register />
+            <Login /> */}
         </>
     )
 }

@@ -9,10 +9,11 @@ const schema = yup.object({
     phoneNumber: yup.string().required(),
     amountOfPeople: yup.number().max(50, 'không đặt bàn quá 50 người').required(),
     partyForm: yup.string(),
-    deco: yup.string(),
+    deco: yup.boolean().required(),
     hour: yup.number().required(),
     day: yup.number().required(),
-    mounth: yup.number().required()
+    mounth: yup.number().required(),
+    restaurantName: yup.string().required()
 })
 
 export default function BookingModal({ data }) {
@@ -45,7 +46,13 @@ export default function BookingModal({ data }) {
     // console.log(data)
     let time = data.timeClose - data.timeOpen
     const submitCreateCustomerInfo = (values) => {
-        dispatch(handleSubmitCustomerInfo(values))
+        const valueData = {
+            ...values,
+            restaurantName: data.name
+        }
+        dispatch(handleSubmitCustomerInfo(valueData))
+        console.log(valueData)
+
     }
     return (
         <>
@@ -53,11 +60,18 @@ export default function BookingModal({ data }) {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
+                            <h5 class="modal-title">phiếu điền thông tin</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form onSubmit={handleSubmit(submitCreateCustomerInfo)}>
+                                <div className="form-group mb-2">
+                                    <input className="text-center color-red"
+                                        value={data.name}
+                                        {...register('restaurantName')}
+                                    />
+                                    <span className="invalid-feedback">{errors.restaurantName?.message}</span>
+                                </div>
                                 <div className="form-group mb-2">
                                     <label className="form-label">tên</label>
                                     <input type="text"
@@ -67,7 +81,7 @@ export default function BookingModal({ data }) {
                                 </div>
                                 <div className="form-group mb-2">
                                     <label className="form-label">phoneNumber</label>
-                                    <input type="tel"
+                                    <input type="phone"
                                         className={`form-control ${errors.phoneNumber?.message ? 'is-invalid' : ''}`}
                                         {...register('phoneNumber')} />
                                     <span className="invalid-feedback">{errors.phoneNumber?.message}</span>

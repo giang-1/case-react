@@ -10,7 +10,7 @@ const schema = yup.object({
     address: yup.string().required(),
     timeOpen: yup.number().required(),
     timeClose: yup.number().required(),
-    rating: yup.number().required(),
+    rating: yup.number().max(5, '5 sao thôi tk lz').required(),
     minPrice: yup.number().required(),
     maxPrice: yup.number().required()
 })
