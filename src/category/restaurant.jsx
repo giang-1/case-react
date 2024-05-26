@@ -13,12 +13,15 @@ import EditRestaurant from "../component/edit/edit-restaurant";
 import { Modal } from "bootstrap";
 import CreateRestaurant from "../component/create/create-restaurant";
 import DetailRestaurant from "../component/detail/detailRestaurant";
+import { BiCommentDetail } from "react-icons/bi";
 
 
 
 export default function Restaurant() {
     const dispatch = useDispatch()
     const { searchText, maxPrice, rating } = useSelector((state) => state.filterList)
+    const loginRoll = useSelector((state) => state.cartListRestaurant.loginRoll)
+    console.log(loginRoll)
     const [detailRestaurant, setDetailRestaurant] = useState({})
     const [dataForEdit, setDataForEdit] = useState()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
@@ -46,10 +49,10 @@ export default function Restaurant() {
         dispatch(fetchRestaurantList())
     }, [])
     // console.log(number)
-    // const handleAddToCart = (item) => {
-    //     dispatch(cartSlice.actions.addToCart(item))
-    //     // console.log(item)
-    // }
+    const handleAddToCart = (item) => {
+        dispatch(cartSlice.actions.addToCart(item))
+        // console.log(item)
+    }
     const openEditRestaurant = (item) => {
         const modalElement = new Modal(document.getElementById('editRestaurant'))
         modalElement.show()
@@ -116,34 +119,37 @@ export default function Restaurant() {
                                     }</li>
                                     <li className="list-group-item">{item.address}</li>
                                     <li className="list-group-item">
-                                        {/* <button
-                                        className="btn btn-outline-primary me-1"
-                                        onClick={() => handleAddToCart(item)}
-                                    > <MdDone />quan t</button> */}
+                                        {loginRoll ? '' : <button
+                                            className="btn btn-outline-primary me-1"
+                                            onClick={() => handleAddToCart(item)}
+                                        > <MdDone />quan t</button>}
+
                                         <button
                                             className="btn btn-outline-primary me-2"
                                             onClick={() => openDetailRestaurant(item)}
 
-                                        > <MdDone />chi tiết</button>
-                                        <button
+                                        > <BiCommentDetail />chi tiết</button>
+                                        {loginRoll ? <button
                                             className="btn btn-outline-warning me-2"
                                             onClick={() => openEditRestaurant(item)}
-                                        >sửa</button>
-                                        <button
+                                        >sửa</button> : ''}
+
+                                        {loginRoll ? <button
                                             className="btn btn-outline-danger mt-2"
                                             onClick={() => removeRestaurant(item)}
-                                        >xóa</button>
+                                        >xóa</button> : ''}
                                     </li>
                                 </ul>
                             </div>
                         ))
                     }
-                    <div>
+                    {loginRoll ? <div>
                         <button
                             className="btn btn-sm bg-success"
                             onClick={openCreateRestaurant}
                         > <CiCirclePlus size={'30px'} />thêm nhà hàng vào danh sách </button>
-                    </div>
+                    </div> : ''}
+
 
                 </div>
                 <EditRestaurant />

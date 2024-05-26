@@ -25,7 +25,7 @@ function App() {
         <Route path='/restaurantAdmin' element={<Restaurant />} />
         <Route path='/cartSlice' element={<CartList />} />
         {/* <Route path='/visitLocation' element={<ShowVisitLocationList />} /> */}
-        <Route path='/restaurant' element={<Restaurant2 />} />
+        <Route path='/restaurant' element={<Restaurant />} />
         <Route path='*' element={<MainLayout />} />
       </Routes>
       {/* <Restaurant /> */}

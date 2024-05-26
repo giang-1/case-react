@@ -15,18 +15,19 @@ export default function NavBar({ login }) {
                             {/* <li className="nav-item">
                                 <NavLink className="nav-link" to="/home">home</NavLink>
                             </li> */}
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 {loginRoll ? <NavLink className="nav-link" to="/restaurantAdmin">restaurant list</NavLink> :
                                     <NavLink className="nav-link" to="/restaurant">restaurant list</NavLink>}
-                            </li>
+                            </li> */}
+                            <NavLink className="nav-link" to="/restaurantAdmin">restaurant list</NavLink>
                             {/* <li className="nav-item">
                                 <NavLink className="nav-link" to='/visitLocation'>visitLocation</NavLink>
                             </li> */}
                         </ul>
                     </div>
 
-                    {login ? <NavLink className="nav-link" aria-current="page" to="/cartSlice">cart</NavLink> :
-                        <NavLink to={'/oderList'}>oder list </NavLink>}
+                    {loginRoll ? <NavLink to={'/oderList'}>oder list </NavLink> : <NavLink className="nav-link" aria-current="page" to="/cartSlice">cart</NavLink>
+                    }
 
                 </div>
             </nav>

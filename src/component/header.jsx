@@ -3,6 +3,7 @@ import { Modal } from "bootstrap";
 import Register from "../login/register";
 import Login from "../login/login";
 import { IoEarthSharp } from "react-icons/io5";
+import { BiCommentDetail } from "react-icons/bi";
 import { useState } from "react";
 import NavBar from "../navbar/navbar";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +24,7 @@ export default function Header() {
                 <h4 className="flex-grow-1 text-center">du lịch huế</h4>
                 <div className="d-flex align-items-center">
 
-                    <Link to={loginRoll ? '/restaurant' : '/restaurantAdmin'} className="btn btn-light text-dark me-3" role="button"
+                    <Link to={'/restaurantAdmin'} className="btn btn-light text-dark me-3" role="button"
                         onClick={handleLoginRoll}
                     >{loginRoll ? 'đăng xuất' : 'đăng nhập'}</Link>
 
