@@ -8,11 +8,11 @@ const schema = yup.object({
     name: yup.string().required(),
     image: yup.string().required(),
     address: yup.string().required(),
-    timeOpen: yup.number().required(),
-    timeClose: yup.number().required(),
-    rating: yup.number().max(5, '5 sao thôi tk lz').required(),
-    minPrice: yup.number().required(),
-    maxPrice: yup.number().required()
+    timeOpen: yup.number().typeError('vui lòng điền giờ mở cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required(),
+    timeClose: yup.number().typeError('vui lòng điền giờ đóng cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required('đây là trường bắt buộc'),
+    rating: yup.number().max(5, '5 là số sao tối đa').required(),
+    minPrice: yup.number().typeError('vui lòng điền giá thấp nhất').min(10000, 'không thể tạo giá trị âm').required('đây là trường bắt buộc'),
+    maxPrice: yup.number().typeError('vui lòng điền giá cao nhất').min(yup.ref('minPrice'), 'giá trị phải lớn hơn giá thấp nhất').required()
 })
 
 export default function CreateRestaurant() {
@@ -71,7 +71,7 @@ export default function CreateRestaurant() {
                                 <span className="invalid-feedback">{errors.timeOpen?.message}</span>
                             </div>
                             <div className="form-group mb-2">
-                                <label className="form-label">giờ mở cửa</label>
+                                <label className="form-label">giờ đóng cửa</label>
                                 <input type="number"
                                     className={`form-control ${errors.timeClose?.message ? 'is-invalid' : ''}`}
                                     {...register('timeClose')} />
@@ -113,7 +113,7 @@ export default function CreateRestaurant() {
                                 >Close</button>
                                 <button type="submit" className="btn btn-primary"
 
-                                >Save changes</button>
+                                >tạo</button>
                             </div>
                         </form>
                     </div>
