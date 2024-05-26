@@ -30,9 +30,20 @@ const cartSlice = createSlice({
         builder.addCase(fetchOderList.fulfilled, (state, action) => {
             state.cartOderList = action.payload
         })
+        builder.addCase(removeOderListItem.fulfilled, (state, action) => {
+            state.cartOderList = state.cartOderList.filter((item) => item.id !== action.payload.id)
+        })
     }
 
 })
+export const removeOderListItem = createAsyncThunk('cart/removeOderListItem',
+    async (item) => {
+        let res = await fetch(`https://contact-api-orcin.vercel.app/customerInfor/${item.id}`, {
+            method: 'DELETE'
+        })
+        return item
+    }
+)
 export const handleSubmitCustomerInfo = createAsyncThunk('cart/handleSubmitCustomerInfo',
     async (item) => {
         let res = await fetch('https://contact-api-orcin.vercel.app/customerInfor', {

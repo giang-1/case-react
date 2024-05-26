@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "./main-layout";
 import { useEffect } from "react";
-import { fetchOderList } from "../slice/cart-slice";
+import { fetchOderList, removeOderListItem } from "../slice/cart-slice";
 import filterSlice from "../slice/fillter-slice";
+import { TiMap } from "react-icons/ti";
+import { FaDeleteLeft } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const arrayFill = ['ngày mới nhất', 'ngày cũ nhất']
 
@@ -33,6 +36,31 @@ export default function OderList() {
         return oderListFill
     }
     const currenOderList = queryOderList()
+    const handleDeleteOderList = (item) => {
+        Swal.fire({
+            title: "bạn có chắc muốn xóa oder này khỏi danh sách chứ ?",
+            text: "bạn sẽ không thể hoàn tác",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "xóa"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(removeOderListItem(item))
+                Swal.fire({
+                    title: "Tuyệt vời",
+                    text: "đã xóa thành công",
+                    imageUrl: "https://i.pinimg.com/474x/a6/7a/7c/a67a7c25e550e0ffab11c42a3c4f796c.jpg",
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: "Custom image"
+                });
+
+            }
+
+        });
+
+    }
 
     return (
         <MainLayout>
@@ -89,7 +117,9 @@ export default function OderList() {
                                 <td>{item.partyForm}</td>
                                 <td>{item.deco ? "có" : "không"}</td>
                                 <td>{item.hour}giờ -ngày{item.day}/{item.mounth}</td>
-
+                                <td><button className="btn btn-sm bg-danger"
+                                    onClick={() => handleDeleteOderList(item)}
+                                ><FaDeleteLeft /></button></td>
                             </tr>
                         ))
                     }

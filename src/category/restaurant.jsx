@@ -21,7 +21,6 @@ export default function Restaurant() {
     const dispatch = useDispatch()
     const { searchText, maxPrice, rating } = useSelector((state) => state.filterList)
     const loginRoll = useSelector((state) => state.cartListRestaurant.loginRoll)
-    console.log(loginRoll)
     const [detailRestaurant, setDetailRestaurant] = useState({})
     const [dataForEdit, setDataForEdit] = useState()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
@@ -57,7 +56,7 @@ export default function Restaurant() {
         const modalElement = new Modal(document.getElementById('editRestaurant'))
         modalElement.show()
         dispatch(editRestaurantList(item))
-        console.log(item)
+        // console.log(item)
     }
     const openCreateRestaurant = () => {
         const modalElement = new Modal(document.getElementById('createRestaurant'))
@@ -105,19 +104,19 @@ export default function Restaurant() {
                             <div className="card col-md-3 mb-4 me-4 mt-4" style={{ width: '15rem' }} key={item.id}
 
                             >
-                                <img src={item.image} className="card-img-top" alt="..." />
+                                <img src={item.image} className="card-img-top img-thumbnail text-center" alt="..." />
                                 <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
+                                    <h5 className="card-title font-monospace">{item.name}</h5>
                                     {/* <p className="card-text">{item.describe}</p> */}
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">{`${item.minPrice} - ${item.maxPrice}`}</li>
-                                    <li className="list-group-item">{
+                                    <li className="list-group-item font-monospace">{` ${item.minPrice} - ${item.maxPrice} VND`}</li>
+                                    <li className="list-group-item font-monospace">đánh giá :  {
                                         new Array(item.rating).fill(1).map((i, index) => (
                                             <FaStar key={index} />
                                         ))
                                     }</li>
-                                    <li className="list-group-item">{item.address}</li>
+                                    <li className="list-group-item font-monospace"><p className="text-decoration-underline font-monospace">địa chỉ : </p>{item.address}</li>
                                     <li className="list-group-item">
                                         {loginRoll ? '' : <button
                                             className="btn btn-outline-primary me-1"

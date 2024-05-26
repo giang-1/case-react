@@ -12,28 +12,29 @@ export default function DetailRestaurant({ item }) {
                         </div>
                         <div className="modal-body">
                             <div class="card bg-dark text-white">
-                                <img src={item.image} className="card-img" alt="..."
+                                {/* <img src={item.image} className="card-img" alt="..."
 
-                                />
+                                /> */}
                                 <div class="card-img-overlay">
                                     <div class="badge bg-primary text-wrap"
                                         width='50px'
                                         style={{ width: "6rem;" }}>
-                                        {item.name}
+
                                     </div>
                                 </div>
                                 <div>
-                                    <div>{
+                                    <div className="text-decoration-underline font-monospace"> đánh giá :{
                                         new Array(item.rating).fill(1).map((i, index) => (
                                             <FaStar color="yellow" key={index} />
                                         ))
                                     }
                                     </div>
-                                    <p>{item.address}</p>
-                                    <p>{item.minPrice - item.maxPrice}</p>
-                                    <p>{item.describe}</p>
-                                    <p>{item.timeOpen}</p>
-                                    <p>{item.timeClose}</p>
+                                    <div><p className="text-decoration-underline font-monospace">địa chỉ: </p> {item.address}</div>
+
+                                    <p>{`${item.minPrice}  - ${item.maxPrice} VND`}</p>
+                                    <p>{`open ${item.timeOpen} - ${item.timeClose}h`}</p>
+                                    <div><p className="text-decoration-underline font-monospace">miêu tả : </p> {item.describe}</div>
+                                    <p></p>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { createRestaurantList } from "../../slice/restaurant-slice"
-import { useState } from "react"
+import Swal from "sweetalert2"
 const schema = yup.object({
-    name: yup.string().required(),
-    image: yup.string().required(),
-    address: yup.string().required(),
+    name: yup.string().required('đây là trường bắt buộc'),
+    image: yup.string().required('đây là trường bắt buộc'),
+    address: yup.string().required('đây là trường bắt buộc'),
     timeOpen: yup.number().typeError('vui lòng điền giờ mở cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required(),
     timeClose: yup.number().typeError('vui lòng điền giờ đóng cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required('đây là trường bắt buộc'),
     rating: yup.number().max(5, '5 là số sao tối đa').required(),
@@ -29,6 +29,7 @@ export default function CreateRestaurant() {
     const submitCreateRestaurant = (values) => {
         dispatch(createRestaurantList(values))
         reset()
+        Swal.fire("đã tạo thành công")
     }
     return (
         <div className="modal fade show" tabindex="-1" id="createRestaurant">
@@ -80,18 +81,18 @@ export default function CreateRestaurant() {
                             <div className="form-group mb-2">
                                 <label className="form-label">giá thấp nhất</label>
                                 <input type="number"
-                                    className={`form-control ${errors.price?.message ? 'is-invalid' : ''}`}
+                                    className={`form-control ${errors.minPrice?.message ? 'is-invalid' : ''}`}
                                     {...register('minPrice')}
                                 />
-                                <span className="invalid-feedback">{errors.price?.message}</span>
+                                <span className="invalid-feedback">{errors.minPrice?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">giá cao nhất</label>
                                 <input type="number"
-                                    className={`form-control ${errors.price?.message ? 'is-invalid' : ''}`}
+                                    className={`form-control ${errors.maxPrice?.message ? 'is-invalid' : ''}`}
                                     {...register('maxPrice')}
                                 />
-                                <span className="invalid-feedback">{errors.price?.message}</span>
+                                <span className="invalid-feedback">{errors.maxPrice?.message}</span>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">rating</label>
@@ -112,7 +113,6 @@ export default function CreateRestaurant() {
                                     onClick={() => reset()}
                                 >Close</button>
                                 <button type="submit" className="btn btn-primary"
-
                                 >tạo</button>
                             </div>
                         </form>

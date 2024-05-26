@@ -3,11 +3,18 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useDispatch } from "react-redux"
 import { handleSubmitCustomerInfo } from "../slice/cart-slice"
+import Swal from "sweetalert2"
 
 const schema = yup.object({
-    name: yup.string().required(),
-    phoneNumber: yup.string().required(),
-    amountOfPeople: yup.number().max(50, 'không đặt bàn quá 50 người').required(),
+    name: yup.string().required('đây là trường bắt buộc'),
+    phoneNumber: yup.string()
+        .required('đây là trường bắt buộc')
+        .typeError('vui lòng điền đúng sđt'),
+    amountOfPeople: yup.number()
+        .typeError('vui lòng điền đúng số lượng người tham gia')
+        .max(50, 'không đặt bàn quá 50 người')
+        .min(1, 'ít nhất phải có 1 người')
+        .required(''),
     partyForm: yup.string(),
     deco: yup.boolean().required(),
     hour: yup.number().required(),
@@ -35,7 +42,7 @@ export default function BookingModal({ data }) {
     for (let i = data.timeOpen; i < data.timeClose && i >= data.timeOpen; i++) {
         arrayTime.push(i)
     }
-    for (let index = 1; index < 31; index++) {
+    for (let index = 1; index <= 31; index++) {
         dayArray.push(index)
 
     }
@@ -51,7 +58,14 @@ export default function BookingModal({ data }) {
             restaurantName: data.name
         }
         dispatch(handleSubmitCustomerInfo(valueData))
-        console.log(valueData)
+        reset()
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "đặt bàn thành công",
+            showConfirmButton: false,
+            timer: 1000
+        })
 
     }
     return (
@@ -165,7 +179,9 @@ export default function BookingModal({ data }) {
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        onClick={() => reset()}
+                                    >Close</button>
                                     <button type="submit" class="btn btn-primary">đặt bàn</button>
                                 </div>
                             </form>
