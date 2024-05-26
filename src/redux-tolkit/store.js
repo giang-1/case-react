@@ -8,7 +8,7 @@ const store = configureStore({
     reducer: {
         restaurantList: restaurantSlice.reducer,
         cartListRestaurant: cartSlice.reducer,
-        visitLocation: visitLocationSlice.reducer,
+        // visitLocation: visitLocationSlice.reducer,
         filterList: filterSlice.reducer
 
     }

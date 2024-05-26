@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import restaurantSlice, { editRestaurantList, fetchRestaurantList, removeRestaurantList } from "../slice/restaurant-slice"
 import { useDispatch, useSelector } from "react-redux"
+import Swal from "sweetalert2";
+// import { toast } from "react-toastify";
+import { CiCirclePlus } from "react-icons/ci";
 import { MdDone } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import cartSlice from "../slice/cart-slice";
@@ -43,10 +46,10 @@ export default function Restaurant() {
         dispatch(fetchRestaurantList())
     }, [])
     // console.log(number)
-    const handleAddToCart = (item) => {
-        dispatch(cartSlice.actions.addToCart(item))
-        // console.log(item)
-    }
+    // const handleAddToCart = (item) => {
+    //     dispatch(cartSlice.actions.addToCart(item))
+    //     // console.log(item)
+    // }
     const openEditRestaurant = (item) => {
         const modalElement = new Modal(document.getElementById('editRestaurant'))
         modalElement.show()
@@ -61,6 +64,31 @@ export default function Restaurant() {
         const modalElement = new Modal(document.getElementById('openDetailModal'))
         modalElement.show()
         setDetailRestaurant(item)
+    }
+    const removeRestaurant = (item) => {
+        Swal.fire({
+            title: "bạn có chắc muốn xóa nhà hàng này khỏi danh sách chứ ?",
+            text: "bạn sẽ không thể hoàn tác",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "xóa"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(removeRestaurantList(item))
+                Swal.fire({
+                    title: "Tuyệt vời",
+                    text: "đã xóa thành công",
+                    imageUrl: "https://i.pinimg.com/474x/a6/7a/7c/a67a7c25e550e0ffab11c42a3c4f796c.jpg",
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: "Custom image"
+                });
+
+            }
+
+        });
     }
 
     return (
@@ -103,20 +131,20 @@ export default function Restaurant() {
                                         >sửa</button>
                                         <button
                                             className="btn btn-outline-danger mt-2"
-                                            onClick={() => {
-                                                dispatch(removeRestaurantList(item))
-                                                // setNumber(number + 1)
-                                            }}
+                                            onClick={() => removeRestaurant(item)}
                                         >xóa</button>
                                     </li>
                                 </ul>
                             </div>
                         ))
                     }
-                    <button
-                        className="btn btn-sm bg-success"
-                        onClick={openCreateRestaurant}
-                    >thêm </button>
+                    <div>
+                        <button
+                            className="btn btn-sm bg-success"
+                            onClick={openCreateRestaurant}
+                        > <CiCirclePlus size={'30px'} />thêm nhà hàng vào danh sách </button>
+                    </div>
+
                 </div>
                 <EditRestaurant />
                 <CreateRestaurant />
