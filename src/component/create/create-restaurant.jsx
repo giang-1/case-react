@@ -11,8 +11,8 @@ const schema = yup.object({
     timeOpen: yup.number().typeError('vui lòng điền giờ mở cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required(),
     timeClose: yup.number().typeError('vui lòng điền giờ đóng cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required('đây là trường bắt buộc'),
     rating: yup.number().max(5, '5 là số sao tối đa').required(),
-    minPrice: yup.number().typeError('vui lòng điền giá thấp nhất').min(10000, 'không thể tạo giá trị âm').required('đây là trường bắt buộc'),
-    maxPrice: yup.number().typeError('vui lòng điền giá cao nhất').min(yup.ref('minPrice'), 'giá trị phải lớn hơn giá thấp nhất').required()
+    minPrice: yup.number().typeError('vui lòng điền giá thấp nhất').min(10000, 'giá trị thấp nhất phải lớn hơn 10,000').required('đây là trường bắt buộc'),
+    maxPrice: yup.number().typeError('vui lòng điền giá cao nhất').min(yup.ref('minPrice'), 'giá trị phải lớn hơn giá thấp nhất').max(1000000, 'không thể tạo 1 giá món ăn quá lớn được').required()
 })
 
 export default function CreateRestaurant() {

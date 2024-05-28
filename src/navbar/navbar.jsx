@@ -13,7 +13,7 @@ export default function NavBar({ cartList }) {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
 
-                            <NavLink className="nav-link active " to="/restaurantAdmin"> <h5 className="text-decoration-underline">restaurant list</h5></NavLink>
+                            <NavLink className="nav-link active " to="/restaurantAdmin"> <h5 className="text-decoration-underline">danh sách nhà hàng</h5></NavLink>
                         </ul>
                     </div>
                     {loginRoll ? <NavLink to={'/oderList'}><button className="btn btn-sm bg-info"> oder list</button> </NavLink> :

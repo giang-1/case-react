@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useDispatch } from "react-redux"
-import { handleSubmitCustomerInfo } from "../slice/cart-slice"
+import cartSlice, { handleSubmitCustomerInfo } from "../slice/cart-slice"
 import Swal from "sweetalert2"
 
 const schema = yup.object({
@@ -17,9 +17,9 @@ const schema = yup.object({
         .required(''),
     partyForm: yup.string(),
     deco: yup.boolean().required(),
-    hour: yup.number().required(),
-    day: yup.number().required(),
-    mounth: yup.number().required(),
+    hour: yup.number().typeError('vui lòng điền đúng thông tin').required(),
+    day: yup.number().typeError('vui lòng điền đúng thông tin').required(),
+    mounth: yup.number().typeError('vui lòng điền đúng thông tin').required(),
     restaurantName: yup.string().required()
 })
 
@@ -58,6 +58,8 @@ export default function BookingModal({ data }) {
             restaurantName: data.name
         }
         dispatch(handleSubmitCustomerInfo(valueData))
+        dispatch(cartSlice.actions.removeListCart(data))
+        dispatch(cartSlice.actions.setBookingCart(valueData))
         reset()
         Swal.fire({
             position: "top-end",

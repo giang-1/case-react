@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { handleEditRestaurantList } from "../../slice/restaurant-slice"
+import restaurantSlice, { handleEditRestaurantList } from "../../slice/restaurant-slice"
 import Swal from "sweetalert2"
 const schema = yup.object({
     name: yup.string().required('đây là trường bắt buộc'),
@@ -12,7 +12,7 @@ const schema = yup.object({
     timeOpen: yup.number().typeError('vui lòng điền giờ mở cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required(),
     timeClose: yup.number().typeError('vui lòng điền giờ đóng cửa').min(0, 'giờ mở cửa phải lớn hơn 0').max(24, 'không thể lớn hơn 24').required('đây là trường bắt buộc'),
     rating: yup.number().max(5, '5 là số sao tối đa').required(),
-    minPrice: yup.number().typeError('vui lòng điền giá thấp nhất').min(10000, 'không thể tạo giá trị âm').required('đây là trường bắt buộc'),
+    minPrice: yup.number().typeError('vui lòng điền giá thấp nhất').min(10000, 'không thể tạo giá trị quá nhỏ').required('đây là trường bắt buộc'),
     maxPrice: yup.number().typeError('vui lòng điền giá cao nhất').min(yup.ref('minPrice'), 'giá trị phải lớn hơn giá thấp nhất').required()
 })
 
@@ -165,7 +165,7 @@ export default function EditRestaurant() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
-
+                                    onClick={() => reset()}
                                 >Close</button>
                                 <button type="submit" className="btn btn-primary"
                                 >Save changes</button>

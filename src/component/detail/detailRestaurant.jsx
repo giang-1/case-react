@@ -31,7 +31,7 @@ export default function DetailRestaurant({ item }) {
                                     </div>
                                     <div><p className="text-decoration-underline font-monospace">địa chỉ: </p> {item.address}</div>
 
-                                    <p>{`${item.minPrice}  - ${item.maxPrice} VND`}</p>
+                                    <p>{`giá từ :${item.minPrice}  - ${item.maxPrice} VND`}</p>
                                     <p>{`open ${item.timeOpen} - ${item.timeClose}h`}</p>
                                     <div><p className="text-decoration-underline font-monospace">miêu tả : </p> {item.describe}</div>
                                     <p></p>

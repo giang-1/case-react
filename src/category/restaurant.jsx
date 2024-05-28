@@ -22,8 +22,9 @@ export default function Restaurant() {
     const { searchText, maxPrice, rating } = useSelector((state) => state.filterList)
     const loginRoll = useSelector((state) => state.cartListRestaurant.loginRoll)
     const [detailRestaurant, setDetailRestaurant] = useState({})
-    const [dataForEdit, setDataForEdit] = useState()
+    // const [dataForEdit, setDataForEdit] = useState()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
+
     const queryRestaurant = () => {
         let filterRestaurant = [...restaurantList]
         // console.log(filterRestaurant)
@@ -47,26 +48,28 @@ export default function Restaurant() {
     useEffect(() => {
         dispatch(fetchRestaurantList())
     }, [])
-    // console.log(number)
+
     const handleAddToCart = (item) => {
         dispatch(cartSlice.actions.addToCart(item))
-        // console.log(item)
     }
+
     const openEditRestaurant = (item) => {
         const modalElement = new Modal(document.getElementById('editRestaurant'))
         modalElement.show()
         dispatch(editRestaurantList(item))
-        // console.log(item)
     }
+
     const openCreateRestaurant = () => {
         const modalElement = new Modal(document.getElementById('createRestaurant'))
         modalElement.show()
     }
+
     const openDetailRestaurant = (item) => {
         const modalElement = new Modal(document.getElementById('openDetailModal'))
         modalElement.show()
         setDetailRestaurant(item)
     }
+
     const removeRestaurant = (item) => {
         Swal.fire({
             title: "bạn có chắc muốn xóa nhà hàng này khỏi danh sách chứ ?",
@@ -104,7 +107,7 @@ export default function Restaurant() {
                             <div className="card col-md-3 mb-4 me-4 mt-4" style={{ width: '15rem' }} key={item.id}
 
                             >
-                                <img src={item.image} className="card-img-top img-thumbnail text-center" alt="..." />
+                                <img src={item.image} className="card-img-top img-thumbnail text-cente rounded-pill" width={'90'} alt="..." />
                                 <div className="card-body">
                                     <h5 className="card-title font-monospace">{item.name}</h5>
                                     {/* <p className="card-text">{item.describe}</p> */}
@@ -121,7 +124,7 @@ export default function Restaurant() {
                                         {loginRoll ? '' : <button
                                             className="btn btn-outline-primary me-1"
                                             onClick={() => handleAddToCart(item)}
-                                        > <MdDone />quan t</button>}
+                                        > <MdDone />quan tâm</button>}
 
                                         <button
                                             className="btn btn-outline-primary me-2"
@@ -130,7 +133,9 @@ export default function Restaurant() {
                                         > <BiCommentDetail />chi tiết</button>
                                         {loginRoll ? <button
                                             className="btn btn-outline-warning me-2"
-                                            onClick={() => openEditRestaurant(item)}
+                                            onClick={() => {
+                                                openEditRestaurant(item)
+                                            }}
                                         >sửa</button> : ''}
 
                                         {loginRoll ? <button

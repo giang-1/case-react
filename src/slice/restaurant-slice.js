@@ -5,14 +5,13 @@ const restaurantSlice = createSlice({
     initialState: {
         isLoading: 'idle',
         restaurant: [],
-        dataForEdit: {}
+        dataForEdit: {},
     },
     reducers: {
         takeDataForEdit: (state, action) => {
             state.dataForEdit = action.payload
 
         }
-
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRestaurantList.pending, (state, action) => {
@@ -31,7 +30,7 @@ const restaurantSlice = createSlice({
             state.isLoading = 'idle'
             const id = action.payload.id;
             if (id) {
-                state.restaurant = state.restaurant.filter((item) => item.id != id);
+                state.restaurant = state.restaurant.filter((item) => item.id !== id);
             }
         })
 
@@ -55,7 +54,7 @@ const restaurantSlice = createSlice({
         })
         builder.addCase(handleEditRestaurantList.fulfilled, (state, action) => {
             state.restaurant = state.restaurant.map((item) => {
-                if (item.id == action.payload.id) {
+                if (item.id === action.payload.id) {
                     return action.payload
                 }
                 return item

@@ -94,7 +94,7 @@ export default function OderList() {
                     }
                 </div>
             </div>
-            <table className="table">
+            <table className="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>tên khách hàng</th>

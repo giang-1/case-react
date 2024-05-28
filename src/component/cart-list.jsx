@@ -5,8 +5,10 @@ import BookingModal from "./bookingModal";
 import { useState } from "react";
 import filterSlice from "../slice/fillter-slice";
 import { NavLink } from "react-router-dom";
+import cartSlice from "../slice/cart-slice";
 
 export default function CartList() {
+    const booking = useSelector((state) => state.cartListRestaurant.bookingCart)
     const dispatch = useDispatch()
     const [bookingData, setBookingData] = useState({})
     // const [a, setA] = useState(false)
@@ -20,12 +22,20 @@ export default function CartList() {
         // setA(true)
 
     }
+    const removeOderList = (item) => {
+        dispatch(cartSlice.actions.removeListCart(item))
+    }
     return (
         <>
             <MainLayout>
                 {cartList.length ? <h3>những nhà hàng bạn đã quan tâm</h3> :
-                    <div> <h3>bạn vẫn chưa quan tâm nhà hàng nào</h3>
-                        <NavLink to={'/restaurantAdmin'}> quay lại danh sách nhà hàng</NavLink></div>
+                    booking.length ? <div> <h3>bạn vẫn muốn đặt thêm nhà hàng khác ?</h3>
+
+                        <NavLink to={'/restaurantAdmin'}> <button className="btn btn-sm bg-info">quay lại danh sách</button></NavLink></div>
+                        :
+                        <div> <h3>bạn vẫn chưa quan tâm nhà hàng nào</h3>
+
+                            <NavLink to={'/restaurantAdmin'}> <button className="btn btn-sm bg-info">quay lại danh sách</button></NavLink></div>
 
 
                 }
@@ -45,11 +55,49 @@ export default function CartList() {
                                 <button onClick={() => openBookingModal(item)}
                                     className="btn btn-sm bg-success"
                                 ><h5>đặt bàn</h5></button>
+                                <button className="btn btn-sm bg-danger"
+                                    onClick={() => removeOderList(item)}
+                                >xóa khỏi danh sách quan tâm</button>
                             </div>
                         ))
                     }
                     <BookingModal data={bookingData} />
                 </div>
+                {
+                    booking?.length ? <div>
+                        <h3>những nhà hàng bạn đã đặt bàn</h3>
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>tên nhà hàng</th>
+                                    <th>số điện thoại</th>
+                                    <th>tên khách hàng</th>
+                                    <th>giờ</th>
+                                    <th>ngày ,tháng</th>
+                                    <th>số người</th>
+                                    <th>loại tiệc</th>
+                                    <th>trang trí</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    booking?.map((item) => (
+                                        <tr key={item.id}>
+                                            <td>{item.restaurantName}</td>
+                                            <td>{item.phoneNumber}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.hour}</td>
+                                            <td>{item.day}/{item.mounth}</td>
+                                            <td>{item.amountOfPeople}</td>
+                                            <td>{item.partyForm}</td>
+                                            <td>{item.deco ? 'có' : 'không'}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div> : ''
+                }
             </MainLayout>
 
             {/* <BookingModal /> */}

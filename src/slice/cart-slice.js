@@ -5,7 +5,8 @@ const cartSlice = createSlice({
     initialState: {
         cartList: [],
         loginRoll: false,
-        cartOderList: []
+        cartOderList: [],
+        bookingCart: []
     },
     reducers: {
         addToCart: (state, action) => {
@@ -21,6 +22,16 @@ const cartSlice = createSlice({
         },
         handleLoginRoll: (state, action) => {
             state.loginRoll = action.payload
+        },
+        removeListCart: (state, action) => {
+            state.cartList = state.cartList?.filter((item) => item.id !== action.payload.id)
+        },
+        setBookingCart: (state, action) => {
+            state.bookingCart = [...state.bookingCart,
+            action.payload
+            ]
+            console.log(action.payload)
+            // console.log(state.bookingCart)
         }
     },
     extraReducers: (builder) => {
