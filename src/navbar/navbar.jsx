@@ -2,6 +2,7 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FaRegWindowRestore } from "react-icons/fa";
+import '../../src/index.css'
 
 export default function NavBar({ cartList }) {
     // console.log(login)

@@ -18,7 +18,8 @@ export default function OderList() {
         dispatch(fetchOderList())
     }, [])
     const oderList = useSelector((state) => state.cartListRestaurant.cartOderList)
-    // console.log(oderList)
+    const oderSearchMounth = useSelector((state) => state.filterList.oderSearchMounth)
+    // console.log(oderSearchMounth)
 
     const queryOderList = () => {
         let oderListFill = [...oderList]
@@ -26,13 +27,17 @@ export default function OderList() {
             oderListFill = oderListFill.filter((item) => item.phoneNumber.includes(searchOderList)
                 || item.name.toLowerCase().includes(searchOderList.toLowerCase()))
         }
-        if (oderListSort === 'ngày mới nhất') {
-            oderListFill = oderListFill.sort((a, b) => a.mounth - b.mounth)
+        if (oderSearchMounth) {
+            oderListFill = oderListFill.filter((item) => item.mounth == oderSearchMounth)
+            if (oderListSort === 'ngày mới nhất') {
+                oderListFill = oderListFill.sort((a, b) => a.day - b.day)
+            }
+
+            if (oderListSort === 'ngày cũ nhất') {
+                oderListFill = oderListFill.sort((a, b) => b.day - a.day)
+            }
         }
 
-        if (oderListSort === 'ngày cũ nhất') {
-            oderListFill = oderListFill.sort((a, b) => b.mounth - a.mounth)
-        }
         return oderListFill
     }
     const currenOderList = queryOderList()
@@ -66,13 +71,12 @@ export default function OderList() {
         <MainLayout>
             <div className="d-flex justify-content-between">
                 <div>
-                    <p>tìm kiếm</p>
-                    <input type="text"
-                        onChange={(e) => dispatch(filterSlice.actions.setOderListSearch(e.target.value))}
-                    />
+                    <p>tìm kiếm theo tên và sđt</p>
+                    <input type="text" onChange={(e) => dispatch(filterSlice.actions.setOderListSearch(e.target.value))} />
                 </div>
                 <div className="form-group">
-                    <p>sắp xếp</p>
+                    <p>sắp xếp theo tháng</p>
+                    <input type="number" onChange={(e) => dispatch(filterSlice.actions.setOderSearchMounth(e.target.value))} />
                     {
                         arrayFill.map((cat, index) => (
                             <div key={cat} className="form-check py-1">

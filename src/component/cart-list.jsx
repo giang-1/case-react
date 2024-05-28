@@ -28,17 +28,18 @@ export default function CartList() {
     return (
         <>
             <MainLayout>
-                {cartList.length ? <h3>những nhà hàng bạn đã quan tâm</h3> :
-                    booking.length ? <div> <h3>bạn vẫn muốn đặt thêm nhà hàng khác ?</h3>
-
-                        <NavLink to={'/restaurantAdmin'}> <button className="btn btn-sm bg-info">quay lại danh sách</button></NavLink></div>
-                        :
-                        <div> <h3>bạn vẫn chưa quan tâm nhà hàng nào</h3>
-
+                <div >
+                    {cartList.length ? <h3>những nhà hàng bạn đã quan tâm</h3> :
+                        booking.length ? <div style={{ height: 400 }}> <h3>bạn vẫn muốn đặt thêm nhà hàng khác ?</h3>
                             <NavLink to={'/restaurantAdmin'}> <button className="btn btn-sm bg-info">quay lại danh sách</button></NavLink></div>
+                            :
+                            <div> <h3>bạn vẫn chưa quan tâm nhà hàng nào</h3>
+                                <NavLink to={'/restaurantAdmin'}> <button className="btn btn-sm bg-info">quay lại danh sách</button></NavLink></div>
 
 
-                }
+                    }
+                </div>
+
 
 
                 <div className="container row">

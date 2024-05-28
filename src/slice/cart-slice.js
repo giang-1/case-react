@@ -6,7 +6,11 @@ const cartSlice = createSlice({
         cartList: [],
         loginRoll: false,
         cartOderList: [],
-        bookingCart: []
+        bookingCart: [],
+        custommerInfo: {
+            nameUser: '',
+            phone: ''
+        }
     },
     reducers: {
         addToCart: (state, action) => {
@@ -32,6 +36,10 @@ const cartSlice = createSlice({
             ]
             console.log(action.payload)
             // console.log(state.bookingCart)
+        },
+        setCustommerInfo: (state, action) => {
+            state.custommerInfo.nameUser = action.payload.nameUser
+            state.custommerInfo.phone = action.payload.phone
         }
     },
     extraReducers: (builder) => {

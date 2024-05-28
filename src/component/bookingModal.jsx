@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import cartSlice, { handleSubmitCustomerInfo } from "../slice/cart-slice"
 import Swal from "sweetalert2"
 
@@ -17,8 +17,8 @@ const schema = yup.object({
         .required(''),
     partyForm: yup.string(),
     deco: yup.boolean().required(),
-    hour: yup.number().typeError('vui lòng điền đúng thông tin').required(),
-    day: yup.number().typeError('vui lòng điền đúng thông tin').required(),
+    hour: yup.string().typeError('vui lòng điền đúng thông tin').required(),
+    day: yup.string().typeError('vui lòng điền đúng thông tin').required(),
     mounth: yup.number().typeError('vui lòng điền đúng thông tin').required(),
     restaurantName: yup.string().required()
 })
@@ -29,11 +29,16 @@ export default function BookingModal({ data }) {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema)
     })
-    // const data = useSelector((state) => state.filterList.dataForBooking)
+    const customInfo = useSelector((state) => state.cartListRestaurant.custommerInfo)
+    if (customInfo.nameUser) {
+        setValue('name', customInfo.nameUser)
+        setValue('phoneNumber', customInfo.phone)
+    }
 
     let arrayTime = []
     let dayArray = []
@@ -57,9 +62,15 @@ export default function BookingModal({ data }) {
             ...values,
             restaurantName: data.name
         }
+        const customInfo = {
+            nameUser: values.name,
+            phone: values.phoneNumber
+        }
+        console.log(valueData)
         dispatch(handleSubmitCustomerInfo(valueData))
         dispatch(cartSlice.actions.removeListCart(data))
         dispatch(cartSlice.actions.setBookingCart(valueData))
+        dispatch(cartSlice.actions.setCustommerInfo(customInfo))
         reset()
         Swal.fire({
             position: "top-end",

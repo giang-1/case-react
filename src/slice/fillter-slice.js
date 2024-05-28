@@ -9,6 +9,7 @@ const filterSlice = createSlice({
         rating: 'tất cả',
         oderListSearch: '',
         oderListSort: '',
+        oderSearchMounth: '',
         dataForBooking: {},
 
 
@@ -28,10 +29,13 @@ const filterSlice = createSlice({
         },
         setOderListSearch: (state, action) => {
             state.oderListSearch = action.payload
-            console.log(action.payload)
+            // console.log(action.payload)
         },
         setOderListFill: (state, action) => {
             state.oderListSort = action.payload
+        },
+        setOderSearchMounth: (state, action) => {
+            state.oderSearchMounth = action.payload
         }
 
     }
