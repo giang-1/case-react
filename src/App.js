@@ -12,6 +12,7 @@ import Home from './component/home';
 import Restaurant2 from './category/restaurant2';
 import OderList from './component/oderList';
 import { ToastContainer } from 'react-toastify';
+import NotFound from './component/notFound';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path='/cartSlice' element={<CartList />} />
         {/* <Route path='/visitLocation' element={<ShowVisitLocationList />} /> */}
         {/* <Route path='/restaurant' element={<Restaurant />} /> */}
-        <Route path='*' element={<MainLayout />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       {/* <Restaurant /> */}
     </div>

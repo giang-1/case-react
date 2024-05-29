@@ -7,7 +7,7 @@ export default function StartFill() {
     return (
         <>
             <div className="py-2 d-flex flex-column justify-content-center">
-                <h5>sao</h5>
+                <h5>sắp xếp theo sao</h5>
                 <div className="form-group">
                     {
                         starList.map((cat, index) => (

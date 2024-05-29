@@ -24,6 +24,8 @@ export default function Restaurant() {
     const [detailRestaurant, setDetailRestaurant] = useState({})
     // const [dataForEdit, setDataForEdit] = useState()
     const restaurantList = useSelector((state) => state.restaurantList?.restaurant)
+    const loading = useSelector((state) => state.restaurantList.isLoading)
+    console.log(loading)
 
     const queryRestaurant = () => {
         let filterRestaurant = [...restaurantList]
@@ -98,8 +100,7 @@ export default function Restaurant() {
 
     return (
         <MainLayout>
-
-            <div className="container row">
+            {loading === 'loading' ? <p>đang tải chờ xíu nhé...</p> : <div className="container row">
                 <div className="col-md-3"><FillBar /></div>
                 <div className="col-md-9 row">
                     {
@@ -159,9 +160,7 @@ export default function Restaurant() {
                 <EditRestaurant />
                 <CreateRestaurant />
                 <DetailRestaurant item={detailRestaurant} />
-            </div>
-
-
+            </div>}
 
         </MainLayout>
     )

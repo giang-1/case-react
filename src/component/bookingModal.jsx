@@ -38,6 +38,7 @@ export default function BookingModal({ data }) {
     if (customInfo.nameUser) {
         setValue('name', customInfo.nameUser)
         setValue('phoneNumber', customInfo.phone)
+        setValue('hour', data.timeOpen)
     }
 
     let arrayTime = []
@@ -58,27 +59,40 @@ export default function BookingModal({ data }) {
     // console.log(data)
     let time = data.timeClose - data.timeOpen
     const submitCreateCustomerInfo = (values) => {
-        const valueData = {
-            ...values,
-            restaurantName: data.name
-        }
-        const customInfo = {
-            nameUser: values.name,
-            phone: values.phoneNumber
-        }
-        console.log(valueData)
-        dispatch(handleSubmitCustomerInfo(valueData))
-        dispatch(cartSlice.actions.removeListCart(data))
-        dispatch(cartSlice.actions.setBookingCart(valueData))
-        dispatch(cartSlice.actions.setCustommerInfo(customInfo))
-        reset()
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "đặt bàn thành công",
-            showConfirmButton: false,
-            timer: 1000
+            title: "hãy chắc chắn thông tin bạn đã điền! ",
+            text: "nếu muốn thay đổi hay bấm cancel để điền lại",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "vâng , đặt bàn!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const valueData = {
+                    ...values,
+                    restaurantName: data.name
+                }
+                const customInfo = {
+                    nameUser: values.name,
+                    phone: values.phoneNumber
+                }
+                console.log(valueData)
+                dispatch(handleSubmitCustomerInfo(valueData))
+                dispatch(cartSlice.actions.removeListCart(data))
+                dispatch(cartSlice.actions.setBookingCart(valueData))
+                dispatch(cartSlice.actions.setCustommerInfo(customInfo))
+                reset()
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "đặt bàn thành công",
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+
+            }
         })
+
 
     }
     return (
