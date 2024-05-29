@@ -44,10 +44,29 @@ export default function BookingModal({ data }) {
     let arrayTime = []
     let dayArray = []
     let monthArray = []
-
-    for (let i = data.timeOpen; i < data.timeClose && i >= data.timeOpen; i++) {
-        arrayTime.push(i)
+    if (data.timeClose > data.timeOpen) {
+        for (let i = data.timeOpen; i < data.timeClose && i >= data.timeOpen; i++) {
+            arrayTime.push(i)
+        }
     }
+    if (data.timeClose < data.timeOpen && data.timeClose > 1) {
+        for (let i = data.timeOpen; i <= 24; i++) {
+            arrayTime.push(i)
+        }
+        for (let j = 1; j < data.timeClose; j++) {
+            arrayTime.push(j)
+        }
+    }
+    if (data.timeClose < data.timeOpen && data.timeClose == 1) {
+        for (let i = data.timeOpen; i <= 24; i++) {
+            arrayTime.push(i)
+        }
+    }
+
+
+
+
+
     for (let index = 1; index <= 31; index++) {
         dayArray.push(index)
 
